@@ -1,0 +1,75 @@
+<header>
+  <div class="header container" style="background-color: rgb(0,160,220);">
+    <div class="row">
+      <div class="col-md-8">
+        <div id="titlePrincipal" style="color:#fff;"><h2 id="titre"><i class="fa fa-tachometer"></i> Tableau de Bord Inventaire Icare</h2></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Open Map</a>
+        <span style="text-align : right; PADDING : 15PX;color:#fff;">année d'inventaire : </span>
+        <div class="btn-group" data-toggle="buttons-radio" id='anneeSelect'>
+        <button type="button" class="btn btn-success annee">2010</button>
+        <button type="button" class="btn btn-success annee">2012</button>
+        </div>
+        <span style="text-align : right; PADDING : 15PX;color:#fff;">Polluants affichés :</span>
+        <!--select id="example-getting-started" multiple="multiple"></select-->
+      </div>
+      {{#if user}}
+      <div class="col-md-3 offset-md-1">
+          <form action="/logout" method="POST" class="form-inline">
+            <label for="inputDeconnect" style="color:#fff;padding-right: 15px;">{{user}}</label>
+            <input type="hidden" name="_method" value="DELETE">
+            <input id="inputDeconnect" type="submit" class="btn btn-danger" value="Déconnexion">
+          </form>
+      </div>
+      {{else}}
+      <div class="col-md-2 offset-md-2">
+        <a href="#connexion" role="button" class="btn btn-primary" data-toggle="modal">Connexion</a>
+      </div>
+      {{/if}}
+      </div>
+    </div>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Map</h4>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body" id="map"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div id="connexion" class="modal">
+  	<div class="modal-dialog" style="width: 350px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Connexion</h4>
+          </div>
+          <div class="modal-body">
+            <div class="box">
+              <form action="/login" method="post">
+                  <div>
+                      <input type="text" name="name" class="form-control" placeholder="Identifiant"/>
+                  </div>
+                  <div>
+                      <input type="password" name="password" class="form-control" placeholder="Mot de passe"/>
+                  </div>
+                  <div>
+                      <input type="submit" class="btn btn-primary" value="Se connecter"/>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</header>

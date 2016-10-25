@@ -1,0 +1,37 @@
+<table class="table">
+<thead>
+<tr>
+<th><i class="fa fa-map-marker fa-fw"></i> </th>
+<th><i class="fa fa-group fa-fw"></i>Habitants</th>
+<th><i class="fa fa-empire fa-fw"></i>Surface Km<sup>2</sup></th>
+<th><i class="fa  fa-institution fa-fw"></i>Communes</th>
+<th><i class="fa  fa-table fa-fw"></i>Emissions</th>
+<th><i class="fa  fa-male fa-fw"></i></th>
+<th><i class="fa  fa-globe fa-fw"></i></th>
+</tr>
+
+</thead>
+<tbody>
+  {{#entites}}
+  <tr> <!-- Region -->
+    <td>{{entite}}</td>
+    <td nowrap>{{formatNumber (round pop) }}</td><td nowrap>{{ formatNumber (round surf) }}</td><td nowrap>{{nbcom}}</td><td nowrap>{{ formatNumber (round emi) }} T/an<br>
+    {{#if_eq id '1'}}
+    {{else if_eq id '2'}}
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioReg}}% ; color: black;"> {{ round ratioReg}} % de la région</div></div>
+    {{else if_eq id '3'}}
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioDept}}% ; color: black;"> {{ round ratioDept}} % du département</div></div>
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioReg}}% ; color: black;"> {{ round ratioReg}} % de la région</div></div>
+    {{else}}
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioEpci}}% ; color: black;"> {{ round ratioEpci}} % de l'EPCI</div></div>
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioDept}}% ; color: black;"> {{ round ratioDept}} % du département</div></div>
+    <div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{ round ratioReg}}% ; color: black;"> {{ round ratioReg}} % de la région</div></div>
+    {{/if_eq}}
+    </td>
+    <!-- conversion du ratio en kg (d'où facteur 1000) -->
+    <td nowrap>{{ divide (round (multiply (divide emi pop) 10000)) 10 }} kg/an/hab</td>
+    <td nowrap>{{ divide (round ( multiply (divide emi surf) 10) ) 10}} T/an/km2</td>
+    </tr>
+  {{/entites}}
+</tbody>
+</table>

@@ -1,0 +1,98 @@
+/*D3*/
+.contour {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 0.75px;
+}
+.contour .path {
+  fill: red;
+  stroke: #fff;
+  stroke-width :0.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.contour_path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.75px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.contour_path.init, .contour_path.cercle{
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.contour_path.init:hover:not(.cercle) {
+  stroke-width: 1.5px;
+  stroke: grey;
+}
+.contour_path.cadastre {
+  stroke-width: 0.5px;
+}
+.contour_path.cadastre:hover {
+  stroke-width: 0.5px;
+  stroke: grey;
+}
+.contour_path.cadastre.dept {
+  stroke-width: 0.2px;
+}
+.contour_path.commune.dept {
+ stroke-width: 0.05px;
+}
+.contour_path.commune.reg {
+  stroke-width: 0.05px;
+}
+.contour_path.cadastre.reg {
+  stroke-width: 0.1px;
+}
+.place-label {
+  fill: #000000
+  font: 9px sans-serif;
+  text-anchor: middle;
+}
+
+.legend text {
+  fill: #ffffff;
+  font: 9px sans-serif;
+  text-anchor: middle;
+  text-shadow:  rgb(0,0,0) 1px 1px 0.5px,
+  rgb(0,0,0) -1px 1px 0.5px,
+  rgb(0,0,0) -1px -1px 0.5px,
+  rgb(0,0,0) 1px -1px 0.5px;
+}
+.bubble {
+  fill: steelblue ;
+  fill-opacity: 0.8;
+  stroke: #fff;
+  stroke-width: 1;
+}
+circle:hover:not(.legend) {
+  stroke: grey;
+  stroke-width: 2.5px;
+}
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 12px;
+  padding: 8px;
+  margin-top: -20px;
+  font: 10px sans-serif;
+  background: #ddd;
+  pointer-events: none;
+}
+div.tooltipBubble, div.tooltipChoropleth, div.tooltipX{
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: #fff;
+  border: 0px;
+  border-radius: 8px;
+}

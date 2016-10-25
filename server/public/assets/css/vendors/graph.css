@@ -1,0 +1,79 @@
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.figure {
+  overflow: auto;
+  margin: 1em 0;
+}
+
+.figure table {
+  margin: 0;
+}
+
+.figure > input {
+  display: none;
+}
+
+.figure > .tabs {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  border-bottom: solid 1px #aaa;
+  font-size: 14px;
+}
+
+.tabs label {
+  display: inline-block;
+  background: #ddd;
+  border: solid 1px #aaa;
+  border-radius: 5px 5px 0 0;
+  padding: 1px 4px 0;
+  margin: 1px 3px -3px;
+}
+
+.view_table:checked ~ .tabs .view_table,
+.view_chart:checked ~ .tabs .view_chart {
+  background: #fff;
+  border-bottom: none;
+  padding-bottom: 1px;
+}
+
+.figure > table, .figure > canvas {
+  clear: right;
+  float: left;
+  margin-right: -100%;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 500ms;
+}
+
+.figure .view_table:checked ~ table,
+.figure .view_chart:checked ~ canvas {
+  opacity: 1;
+  pointer-events: auto;
+}

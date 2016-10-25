@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th><i class="fa fa-info-circle fa-fw"></i>Valeurs remarquables</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {{#entites}}
+    <tr>
+      <td>
+        {{name}}
+      </td>
+      <td>
+        {{formatNumber (round prct) }} %
+      </td>
+    </tr>
+    {{/entites}}
+  </tbody>
+</table>

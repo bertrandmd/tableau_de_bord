@@ -1,0 +1,37 @@
+```bash
+sudo su - postgres
+createuser -P icare
+createdb -O icare -E UTF-8 webmapping
+psql -c "CREATE EXTENSION postgis" webmapping
+psql -c "CREATE EXTENSION tablefunc" webmapping
+exit
+```
+
+sudo su postgres
+exit
+
+
+```bash
+createuser -h 172.16.18.9 api -P -U postgres
+createdb apiinventaire -h 172.16.18.9 -U postgres -O api -E UTF-8
+psql -h 172.16.18.9 -U postgres apiinventaire -c "CREATE SCHEMA emissions_synthese"
+psql -h 172.16.18.9 -U postgres apiinventaire -c "CREATE EXTENSION postgis"
+psql -h 172.16.18.9 -U postgres -d apiinventaire < saveDB.sql
+psql -h 172.16.18.9 -U postgres apiinventaire -c "GRANT SELECT,INSERT,UPDATE on table public.adherents to api"
+psql -h 172.16.18.9 -U postgres apiinventaire -c 'GRANT USAGE ON SCHEMA emissions_synthese TO api;'
+psql -h 172.16.18.9 -U postgres apiinventaire -c 'GRANT select ON ALL TABLES IN SCHEMA public TO api;'
+psql -h 172.16.18.9 -U postgres apiinventaire -c 'GRANT select ON ALL TABLES IN SCHEMA emissions_synthese TO api;'
+psql -h 172.16.18.9 -U postgres apiinventaire -c 'GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO api;'
+psql -h 172.16.18.9 -U postgres apiinventaire -c 'ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO api;'
+```
+
+
+GRANT ... ON ALL TABLES IN SCHEMA ..
+remplace : 
+psql -h 172.16.18.9 -U postgres apiinventaire -c "SELECT 'GRANT SELECT ON '||table_schema||'.'||table_name||' TO api;' \
+FROM   information_schema.TABLES \
+WHERE  table_type='BASE TABLE' \
+AND    table_schema='emissions_synthese';" --tuples-only | psql -h 172.16.18.9 -U postgres -d apiinventaire
+
+pg_dump --host 172.16.18.9 --port 5432 --username "postgres" --no-password --no-owner --format plain --verbose --file "saveDB.sql" --table "emissions_synthese.cadastre" --table "emissions_synthese.cadastre2" --table "emissions_synthese.commune" --table "emissions_synthese.grille" --table "emissions_synthese.info_com" --table "emissions_synthese.validation_commune2" --table "emissions_synthese.validation_commune_snap2" --table "emissions_synthese.validations_commune" --table "public.adherents" --table "public.communes2016" --table "public.cor_com_comcom2017" "MaBase"
+

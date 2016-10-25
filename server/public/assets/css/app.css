@@ -1,0 +1,74 @@
+@import url("node_modules/leaflet/dist/leaflet.css");
+@import url("node_modules/bootstrap/dist/css/bootstrap.css");
+@import url("node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css");
+@import url("node_modules/font-awesome/css/font-awesome.css");
+/* rajouter app.use('/node_modules/font-awesome', express.static(__dirname + '/node_modules/font-awesome'));
+dans index.js d'express*/
+@import url("d3.css");
+
+body {
+padding-top: 126px;
+}
+
+#map {
+  height : 400px;
+}
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+.droits{
+  cursor: pointer;
+  text-decoration: underline;
+  margin-right: 10px;
+}
+.droits:hover{
+  font-weight: bold;
+  background: #c7c7c7;
+}
+.form-control {
+  border-radius: 3px;
+  border: none;
+  color: #333333;
+  font-size: 16px;
+  height: 46px;
+  margin-bottom: 5px;
+  padding: 13px 12px;
+  width: 100%;
+  box-shadow : 0 1px 0px 0px rgba(0,0,0,0.09) inset;
+  background-color: rgba(0,0,0,0.09);
+}
+
+.header {min-height: 75px;}
+#titlePrincipal { min-width: 75%;float:left}
+#indicateurs {min-height: 150px;padding-top: 25px; }
+
+.container-fluid .container {
+  padding-left:0;
+  padding-right:0;
+}
+.dropdown-menu {
+max-height: 500px;
+overflow-y: auto;
+overflow-x: hidden;
+}
+.bs-tabs{
+  margin: 20px;
+}
+.footer {
+  /*position: absolute;*/
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}

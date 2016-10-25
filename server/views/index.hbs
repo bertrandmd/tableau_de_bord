@@ -1,0 +1,278 @@
+{{#if error}}
+  <div class="alert alert-danger" id="alert_template9" style="display: none;">
+    <button type="button" class="close" parent="#alert_template9">×</button>
+    Connexion impossible, identifiant ou mot de passe erroné, merci de vous reconnecter
+  </div>
+{{else }}
+  <div class="alert alert-info" id="alert_template" style="display: none;">
+    <button type="button" class="close" parent="#alert_template">×</button>
+    {{#if_eq role 'superAdmin'}}
+    Bienvenue <b>{{user}}</b>, vous avez accès à tout le contenu via la fenêtre <b>'Open Map'</b> et en tant que superAdmin vous pouvez créer de nouveaux users via la fenêtre <b>'Administration'</b>
+    <br/>Vous pouvez modifier la liste des polluants affichés et choisir l'année de référence de l'inventaire grâce aux boutons ci-dessus.
+    {{else if_eq role 'admin'}}
+    Bienvenue {{user}}, vous avez accès à tout le contenu via la fenêtre <b>'Open Map'</b>
+    <br/>Vous pouvez modifier la liste des polluants affichés et choisir l'année de référence de l'inventaire grâce aux boutons ci-dessus.
+    {{else if_eq role 'user'}}
+    Bienvenue, vous avez accès aux information concernant : {{user}}
+    <br/>Vous pouvez modifier la liste des polluants affichés et choisir l'année de référence de l'inventaire grâce aux boutons ci-dessus.
+    {{else }}
+    Votre jeton de connexion est probablement expiré, merci de vous reconnecter.
+    {{/if_eq}}
+  </div>
+  {{#if message}}
+  <div class="alert alert-{{#if_eq success true}}success{{else}}danger{{/if_eq}}" id="alert_template2" style="display: none;">
+    {{message}}
+    <button type="button" class="close" parent="#alert_template2">×</button>
+  </div>
+  {{/if}}
+{{/if}}
+{{#if user}}
+{{#if_eq role 'superAdmin'}}
+<div class="alert alert-success admin" id="alert_message" style="display: none;">
+  <button type="button" class="close" parent="#alert_message">×</button>
+  <div class="message"></div>
+</div>
+{{/if_eq}}
+<section class="container">
+  <div class="row">
+    <!--div id="map" class="col-md-4 col-sm-12"></div--> <!-- fenetre pour la carte Leaflet -->
+
+    <div class="col-md-12 col-sm-12"> <!-- espace à droite de la carte leaflet -->
+      <div class="row">
+        <div class="col-md-12" style="text-align : center;"><h2>Zone d'Etudes : <span class="title-zone"></span></h2></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12"><h3><i class="fa fa-star-o"></i> Principaux Résultats :</h3></div>
+
+
+      </div>
+      <div class="row">
+        <div class="col-md-6" id="container_bars_2" style=" height: 400px; margin: 0 auto;  float:left; --width: 800px;"></div>
+        <div class="col-md-6" id="container" style=" height: 400px; margin: 0 auto;  float:left; --width: 800px;"></div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</section>
+
+<section class="container">
+  <div class="row">
+    <div class="col-md-12"><h3><i class="fa fa-newspaper-o"></i> Résultats détaillés par polluant :</h3></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" id='choixPolUnique'>
+      <div class="btn-group polUnique" data-toggle="buttons-radio" id='group-button-polluants'>
+
+      </div>
+    </div>
+    <br>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><h4><i class="fa fa-calculator fa-fw details"></i> Indicateurs et comparaisons : Emissions de <span id="nomPol"></span> pour l'année <span id="nomAnnee"></span></h4></div>
+  </div>
+
+  <br>
+  <div class="row">
+    <div id="matable" class="col-md-8"></div> <!--container du tableau de comparaison handlebars/matable.hbs-->
+    <div id="container2" class="col-md-4"></div> <!--container du pieGraph par secteur --> <!-- style="min-width: 400px; max-width:400px; height: 400px; float:left;"-->
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12"><h4><i class="fa fa-map-o"></i> Cartographies</h4></div>
+  </div>
+  <div class="alert alert-info" id="alert_template3">
+    Cliquer sur une maille pour accéder au détail des émissions
+    <button type="button" class="close" parent="#alert_template3">×</button>
+  </div>
+  <div class="row">
+    <div id="tooltip"></div>
+    <div id="map3" class="col-md-6"></div> <!--container de d3-->
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="nav nav-tabs" id="myTab">
+        <li><a data-toggle="tab" href="#sectionA">Emissions par habitant</a></li>
+        <li><a data-toggle="tab" href="#sectionB">Emissions par km<sup>2</sup></a></li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div class="btn-group pull-right color" id='colorSelect'>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#2171b5;color:fff;">Blues</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#238b45;color:fff;">Greens</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#cb181d;color:fff;">Reds</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#d94801;color:fff;">Oranges</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#6a51a3;color:fff;">Purples</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#525252;color:fff;">Greys</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="tab-content">
+      <div id="sectionA" class="tab-pane fade in active">
+        <div id="map32" class="col-md-12"></div> <!--container de d3--> <hr>
+      </div>
+      <div id="sectionB" class="tab-pane fade">
+        <div id="map34" class="col-md-12"></div> <!--container de d3--> <hr>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-6">
+      <div class="btn-group pull-right circleColor" id='circleColorSelect'>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#2171b5;color:fff;">Blues</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#238b45;color:fff;">Greens</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#cb181d;color:fff;">Reds</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#d94801;color:fff;">Oranges</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#6a51a3;color:fff;">Purples</button>
+        <button type="button" class="btn btn-default navbar-btn pull-righ" style="background-color:#525252;color:fff;">Greys</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!--div id="map32" class="col-md-12"></div> <!--container de d3> <hr-->
+    <div id="map33" class="col-md-12"></div> <!--container de d3-->
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12"><h4><i class="fa fa-pie-chart"></i> Détails par sous secteurs : </h4></div>
+  </div>
+  <div class="row">
+    <div id="container4" class="col-md-4"></div> <!-- container pour highcharts --> <!--style="min-width: 400px; max-width:400px; height: 400px; float:left; "-->
+    <div id="container5" class="col-md-4"></div> <!-- container pour highcharts -->
+    <div id="container6" class="col-md-4"></div> <!-- container pour highcharts -->
+  </div>
+  <div class="row">
+    <div id="container7" class="col-md-4"></div> <!-- container pour highcharts --> <!--style="min-width: 400px; max-width:400px; height: 400px; float:left; "-->
+    <div id="container8" class="col-md-4"></div> <!-- container pour highcharts -->
+    <div id="container9" class="col-md-4"></div> <!-- container pour highcharts -->
+  </div>
+  <div class="row">
+    <div id="container10" class="col-md-4"></div> <!-- container pour highcharts --> <!--style="min-width: 400px; max-width:400px; height: 400px; float:left; "-->
+    <div id="container11" class="col-md-4"></div> <!-- container pour highcharts -->
+    <div id="container12" class="col-md-4"></div> <!-- container pour highcharts -->
+  </div>
+  <div class="row">
+    <div id="containerBigPie" class="col-md-6"></div>
+    <div class="col-md-6" id="remarquable"><!--container du tableau de valeurs remarquables handlebars/valeursRemarquable.hbs-->
+    </div>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Map</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body" id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if_eq role 'superAdmin'}}
+  <div id="administration" class="modal">
+    <div class="modal-dialog" style="width: 750px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Administration</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box">
+            <form class="contact">
+              <input type="hidden" name="token" value="{{token}}" />
+              <div>
+                <input type="text" name="name" class="form-control" placeholder="Identifiant" autocomplete="off"/>
+              </div>
+              <div>
+                <input type="password" name="password" class="form-control" placeholder="Mot de passe" autocomplete="off"/>
+              </div>
+              <div>
+                <input type="text" name="email" class="form-control" placeholder="email" autocomplete="off"/>
+              </div>
+              <div>
+                <input type="text" name="droits" class="form-control" value='{"niveau1":{"type":"epci","id":["243400017"]},"niveau2":{"type":"commune","id":["34172"]}}' autocomplete="off"/>
+              </div>
+              <div>
+                <input type="text" name="role" class="form-control" placeholder="role [user, admin, superAdmin]" autocomplete="off"/>
+              </div>
+              <!--div>
+                <input type="submit" class="btn btn-primary" value="Créer nouvel user"/>
+              </div>
+<button class="btn btn-success" id="submitXX">submit</button-->
+
+            </form>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" id="submitPost">Créer User</button>
+            <button class="btn btn-info" id="submitPut">Maj User</button>
+            <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+       </div>
+      </div>
+    </div>
+  </div>
+  {{/if_eq}}
+</section>
+<script src="js/modules/authentification.js"></script>
+<script src="js/modules/map.js"></script>
+<script src="js/index.js"></script>
+{{else}}
+<div class = "container text-center">
+  <div class = "jumbotron">
+    <h1>Bienvenue sur Tableau de bord</h1>
+    <p>Merci de vous connecter pour accéder au contenu</p>
+    <p></p>
+    <p>
+      <!--a href="#connexion" role="button" class="btn btn-primary" data-toggle="modal">Connexion</a-->
+      <a href="#connexion" class = "btn btn-primary btn-lg" role = "button" style="width:195px;" data-toggle="modal">Se connecter</a>
+      <a class = "btn btn-success btn-lg" role = "button">Demander un accès</a>
+    </p>
+  </div>
+</div>
+<div id="connexion" class="modal">
+  <div class="modal-dialog" style="width: 350px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Connexion</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box">
+          <form action="/login" method="post">
+            <div>
+              <input type="text" name="name" class="form-control" placeholder="Identifiant"  autocomplete="off"/>
+            </div>
+            <div>
+              <input type="password" name="password" class="form-control" placeholder="Mot de passe"  autocomplete="off"/>
+            </div>
+            <div>
+              <input type="submit" class="btn btn-primary" value="Se connecter"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+<hr>
+<footer class="footer">
+  <div class="container text-center">
+    <p>Copyright &copy; Air Languedoc-Roussillon 2016</p>
+  </div>
+</footer>
+<script type="text/javascript">
+$('.alert:not(.admin)').fadeIn('slow');
+$('.alert .close').click(function(e) {
+  var cible = this.getAttribute('parent')
+  //$(cible).remove();
+  $(cible).hide();
+});
+</script>

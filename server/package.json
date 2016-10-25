@@ -1,0 +1,49 @@
+{
+  "name": "tableau-de-bord-api-inventaire",
+  "version": "0.1.0",
+  "description": "serveur api pour données de l'inventaire icare",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify  public/assets/js/main.js -o public/assets/js/bundle.js",
+    "bundle-css": "browserify -g browserify-css public/assets/js/main.js > public/assets/js/bundle.js",
+    "start-dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "bmd",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap-multiselect": "^0.9.13",
+    "immediate": "^3.2.3",
+    "leaflet.ajax": "^1.1.0",
+    "next-tick": "^1.0.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-multiselect": "^0.9.13",
+    "browserify-css": "^0.9.1",
+    "calvinmetcalf-immediate": "github:npmcomponent/calvinmetcalf-immediate",
+    "colorbrewer": "^1.0.0",
+    "d3-tip": "^0.6.7",
+    "d3fc-label-layout": "^5.0.0",
+    "font-awesome": "^4.6.3",
+    "handlebars": "^4.0.5",
+    "handlebars-helpers": "^0.7.3",
+    "handlebars-intl": "^1.1.2",
+    "highcharts": "^4.2.6",
+    "highcharts-export-csv": "^1.4.2",
+    "highcharts-more": "^0.1.2",
+    "immediate": "^3.2.3",
+    "leaflet": "^0.7.7",
+    "leaflet-ajax": "^2.0.0",
+    "leaflet.ajax": "^1.1.0",
+    "lie": "^3.1.0",
+    "lodash": "^4.14.1",
+    "octicons": "^4.3.0",
+    "pg-promise": "^5.2.7",
+    "python-shell": "^0.4.0",
+    "turf": "^3.0.14",
+    "turf-filter": "^1.0.1"
+  }
+}
